@@ -3,15 +3,10 @@
         <div class="col">
             <h1>{{message}}</h1>
                 <ul class="list-group">
-                    {% for producto in productos %}
+                    {% for producto in producto_list %}
                     <li class="list-group-item">
                         {{producto.titulo}}
-                            {% if producto.stock %}
-                            <span class="text-success">Disponible</span>
-                            {% else %}
-                            <span class="text-danger">No disponible</span>
-                            {% endif %}
-                        </span>
+                        <span class="text-success">L. {{producto.precio}}</span>
                     </li>
                     {% endfor %}
                 </ul>
