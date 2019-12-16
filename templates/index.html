@@ -1,16 +1,10 @@
 {% extends 'base.html' %}
     {% block content %}
         <div class="col">
-            <h1>{{message}}</h1>
-                <ul class="list-group">
-                    {% for producto in producto_list %}
-                    <li class="list-group-item">
-                        {{producto.titulo}}
-                        <span class="text-success">L. {{producto.precio}}</span>
-                    </li>
-                    {% endfor %}
-                </ul>
-                
+            <h4 class="text-center">{{message}}</h4>
+            {% include 'productos/snippets/busqueda.html' %}
+
+            {% include 'productos/snippets/list.html' %}    
         </div>
     {% endblock %}
         

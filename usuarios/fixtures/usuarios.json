@@ -1,0 +1,38 @@
+[
+{
+    "model": "usuarios.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$7j5zKLS0RRbz$QZQtKdxyI6N5xk3oGQtNuzbBHWZ7CDXMKpHA7/eTiXI=",
+        "last_login": "2019-12-16T19:43:24Z",
+        "is_superuser": true,
+        "username": "efrain",
+        "first_name": "Efrain Alejandro",
+        "last_name": "Rivera Solis",
+        "email": "efrain@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-12-16T19:41:09Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "usuarios.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$180000$JbAE7SZUSgHN$AGuK+ollp/NX6gHeEeg8ChogxjK0gEhPFvG+OkypEu8=",
+        "last_login": "2019-12-16T19:42:18.743Z",
+        "is_superuser": false,
+        "username": "cesia",
+        "first_name": "",
+        "last_name": "",
+        "email": "cesia@hotmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-12-16T19:42:18.127Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

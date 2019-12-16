@@ -3,7 +3,8 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from usuarios.models import User
 
 from .forms import RegistroForm
 
