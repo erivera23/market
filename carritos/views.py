@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Carrito
 from .utils import get_or_create_carrito
 from productos.models import Producto
@@ -21,3 +21,11 @@ def add(request):
     return render(request, 'carritos/add.html', {
         'producto': producto
     })
+
+def remove(request):
+    carrito = get_or_create_carrito(request)
+    producto = Producto.objects.get(pk=request.POST.get('producto_id'))
+
+    carrito.productos.remove(producto)
+
+    return redirect('carritos:carrito')

@@ -25,6 +25,7 @@
                             </th>
                             <th>
                                 <a href="{% url 'productos:producto' producto.slug %}">{{producto.titulo}}</a>
+                                {% include 'carritos/snippets/remove.html' %}
                             </th>
                             <th>1</th>
                             <th>
