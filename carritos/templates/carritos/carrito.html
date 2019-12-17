@@ -15,7 +15,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for producto in carrito.productos.all %}
+                    {% for cp in carrito.productos_related %}
+                        {% with producto=cp.producto %}
                         <tr>
                             <th>{{ forloop.counter }}</th>
                             <th>
@@ -27,14 +28,27 @@
                                 <a href="{% url 'productos:producto' producto.slug %}">{{producto.titulo}}</a>
                                 {% include 'carritos/snippets/remove.html' %}
                             </th>
-                            <th>1</th>
+                            <th>{{cp.cantidad}}</th>
                             <th>
-                                <span class="font-wwight-bold text-danger">{{producto.precio | precio_format }}</span>
+                                <span class="font-weight-bold text-danger">{{producto.precio | precio_format }}</span>
                             </th>
                         </tr>
+                        {% endwith %}
                     {% endfor%}
                 </tbody>
             </table>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="font-weight-bold">
+                        Subtotal({{carrito.productos.count}}): <span class="text-danger">{{carrito.subtotal | precio_format}}</span>
+                    </div>
+                    <div class="mt-2">
+                        <a href="" class="btn btn-warning">Proceder al pago</a>
+                    </div>
+                </div>
+            </div>
         </div>
     {% else %}
         <div class="col">
