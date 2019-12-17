@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load producto_extras %}
 
 {% block content %}
 <div class="col-3">
@@ -9,10 +10,13 @@
         {{producto.titulo}}
     </div>
     <div class="h5 font-weight-bold">
-        Precio: <span class="text-danger"> L.{{producto.precio}}</span>
+        Precio: <span class="text-danger"> {{producto.precio | precio_format }}</span>
     </div>
     <div class="">
         <p>{{producto.descripcion}}</p>
+    </div>
+    <div>
+        {% include 'carritos/snippets/add.html' %}
     </div>
 </div>
 {% endblock %}
