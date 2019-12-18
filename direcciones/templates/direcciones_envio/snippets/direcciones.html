@@ -11,7 +11,7 @@
             {{direccion.codigo_postal}}
         </div>
         <div class="mt-2">
-            <a href="" class="btn btn-info">Editar</a>
+            <a href="{% url 'direcciones_envio:update' direccion.pk %}" class="btn btn-info">Editar</a>
             {% if direccion.default %}
             <div class="text-info">
                 Dirección principal
