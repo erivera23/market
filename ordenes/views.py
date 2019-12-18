@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Orden
 from carritos.utils import get_or_create_carrito
-from .utils import get_or_create_orden
+from .utils import get_or_create_orden, breadcrumb
 from django.contrib.auth.decorators import login_required
 
 
@@ -13,5 +13,6 @@ def orden(request):
 
     return render(request, 'ordenes/orden.html', {
         'carrito': carrito,
-        'orden': orden
+        'orden': orden,
+        'breadcrumb': breadcrumb()
     })

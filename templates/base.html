@@ -12,6 +12,8 @@
     {% include 'navbar.html' %}
     <div class="container">
         {% include 'messages.html' %}
+        {% block breadcrumb %}
+        {% endblock %}
         <div class="mt-3"></div>
         <div class="row">
             {% block content %}

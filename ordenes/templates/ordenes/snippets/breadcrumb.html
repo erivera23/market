@@ -1,0 +1,14 @@
+<div class="mt-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% for item in breadcrumb %}
+             {% if item.active %}
+              <a href="{{item.url}}" class="breadcrumb-item"> {{item.title}}</a>
+             {% else %}
+              <a href="{{item.url}}" class="breadcrumb-item active">{{item.title}}</a>
+             {% endif %}
+            {% endfor %}
+        </ol>
+    </nav>
+
+</div>
