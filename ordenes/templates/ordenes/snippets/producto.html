@@ -1,0 +1,20 @@
+{% load producto_extras %}
+<div class="row mt-2">
+    <div class="col-2">
+        {% if producto.imagen %}
+            <img src="{{producto.imagen.url}}" alt="Imagen del producto" width="60" height="60">
+        {% endif %}
+    </div>
+    <div class="col">
+        <div class="row">
+            <strong>
+                <a href="{% url 'productos:producto' producto.slug %}">
+                    {{producto.titulo}}
+                </a>
+                </strong>
+        </div>
+        <div class="row">
+            <strong class="text-danger">{{producto.precio | precio_format }}</strong>
+        </div>
+    </div>
+</div>

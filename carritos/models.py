@@ -25,6 +25,9 @@ class Carrito(models.Model):
         self.update_subtotal()
         self.update_total()
 
+        if self.orden:
+            self.orden.update_total()
+
     def update_subtotal(self):
         self.subtotal = sum([ cp.cantidad * cp.producto.precio for cp in self.productos_related() ])
         self.save()
@@ -35,6 +38,10 @@ class Carrito(models.Model):
 
     def productos_related(self):
         return self.carritoproductos_set.select_related('producto')
+
+    @property
+    def orden(self):
+        return self.orden_set.first()
 
 class CarritoProductosManager(models.Manager):
 
