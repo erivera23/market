@@ -8,6 +8,13 @@ class User(AbstractUser):
     def get_full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
+    @property
+    def direccion_envio(self):
+        return self.direccion_set.filter(default=True).first()
+
+    def has_direccion_envio(self):
+        return self.direccion_envio is not None
+
 class Customer(User):
     class Meta:
         proxy = True

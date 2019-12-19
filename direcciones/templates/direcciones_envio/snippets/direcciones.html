@@ -10,6 +10,7 @@
         <div class="card-title">
             {{direccion.codigo_postal}}
         </div>
+        {% if edit %}
         <div class="mt-2">
             <a href="{% url 'direcciones_envio:update' direccion.pk %}" class="btn btn-info">Editar</a>
             {% if direccion.default %}
@@ -17,9 +18,11 @@
                 Dirección principal
             </div>
             {%else%}
-            <a href="" class="btn btn-danger">Default</a>
+            <a href="{% url 'direcciones_envio:default' direccion.pk %}" class="btn btn-warning">Default</a>
+            <a href="{% url 'direcciones_envio:delete' direccion.pk %}" class="btn btn-danger">Eliminar</a>
             {%endif%}
         </div>
+        {% endif %}
         
     </div>
 </div>

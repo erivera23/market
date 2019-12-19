@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+ {% include 'ordenes/snippets/breadcrumb.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="col">
+    {% if direccion %}
+    <div class="h3">
+        Recoge el pedido en el punto de entrega
+    </div>
+    <div>
+        {% include 'direcciones_envio/snippets/direcciones.html' %}
+        <div class="mt-2">
+            {% if can_choose_direccion %}
+            
+            <a href="{% url 'ordenes:select_direccion' %}">Otra dirección</a>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="h3">
+        Registra tu dirección de envío
+    </div>
+    <div>
+        {% url 'ordenes:address' as next_url %}
+        <a href="{% url 'direcciones_envio:create' %}?next={{ next_url }}">Registrar una nueva dirección de envío</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

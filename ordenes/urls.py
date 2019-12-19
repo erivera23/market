@@ -3,5 +3,8 @@ from . import views
 app_name = 'ordenes'
 
 urlpatterns = [
-    path('', views.orden, name='orden')
+    path('', views.orden, name='orden'),
+    path('direccion', views.address, name='address'),
+    path('seleccionar/direccion', views.select_direccion, name='select_direccion'),
+    path('establecer/direccionint/<int:pk>', views.check_direccion, name='check_direccion')
 ]

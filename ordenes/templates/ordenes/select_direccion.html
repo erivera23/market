@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    {% include 'ordenes/snippets/breadcrumb.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="col">
+        <div class="h3">
+            Selecciona una dirección de envío
+        </div>
+        <div class="mt-2">
+            {% for direccion in direcciones %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{direccion.direccion}}
+                    </h5>
+                    <p class="card-title"> {{direccion.codigo_postal}}</p>
+                    <a href="{% url 'ordenes:check_direccion' direccion.id %}" class="btn btn-warning">
+                        Seleccionar
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

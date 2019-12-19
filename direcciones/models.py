@@ -17,6 +17,13 @@ class Direccion(models.Model):
     def __str__(self):
         return self.codigo_postal
 
+    def has_ordenes(self):
+        return self.orden_set.count() >= 1
+
     @property
     def direccion(self):
         return '{} - {} - {}'.format(self.ciudad, self.estado, self.pais)
+
+    def update_default(self, default=False):
+        self.default = default
+        self.save()

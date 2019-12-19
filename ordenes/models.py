@@ -4,6 +4,7 @@ from django.db import models
 
 from usuarios.models import User
 from carritos.models import Carrito
+from direcciones.models import Direccion
 
 from django.db.models.signals import pre_save
 
@@ -26,9 +27,23 @@ class Orden(models.Model):
     shipping_total = models.DecimalField(default=50, max_digits=8, decimal_places=2)
     total = models.DecimalField(default=0, max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
+    direccion = models.ForeignKey(Direccion, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.orden_id
+
+    def get_or_set_direccion_envio(self):
+        if self.direccion:
+            return self.direccion
+        direccion_envio = self.user.direccion_envio
+        if direccion_envio:
+            self.update_direccion_envio(direccion_envio)
+
+        return direccion_envio
+    
+    def update_direccion_envio(self, direccion_envio):
+        self.direccion = direccion_envio
+        self.save()
 
     def get_total(self):
         return self.carrito.total + self.shipping_total
