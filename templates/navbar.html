@@ -2,6 +2,7 @@
 {% url 'register' as register %}
 {% url 'carritos:carrito' as carrito %}
 {% url 'direcciones_envio:direcciones' as direcciones %}
+{% url 'ordenes:completadas' as completadas%}
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a href="{% url 'index' %}" class="navbar-brand">Store</a>
@@ -24,6 +25,11 @@
                 <li class="nav-item {% if request.path == direcciones %} active {% endif %}">
                     <a href="{{direcciones}}" class="nav-link">
                         Mis direcciones <span class="fas fa-location-arrow"></span>
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == direcciones %} active {% endif %}">
+                    <a href="{{completadas}}" class="nav-link">
+                        Mis pedidos <span class="fas fa-shipping-fast"></span>
                     </a>
                 </li>
             {% endif %}

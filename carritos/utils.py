@@ -15,3 +15,6 @@ def get_or_create_carrito(request):
     request.session['carrito_id'] = carrito.carrito_id
 
     return carrito
+
+def destruir_carrito(request):
+    request.session['carrito_id'] = None

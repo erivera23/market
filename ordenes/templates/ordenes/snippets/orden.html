@@ -1,0 +1,60 @@
+{% load producto_extras %}
+<div class="card mb-2">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-4">
+                <div class="text-uppercase">
+                    Pedido realizado
+                </div>
+                <div>
+                    {{orden.created_at}}
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-uppercase">
+                    Total
+                </div>
+                <div>
+                    {{orden.total | precio_format}}
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-uppercas">
+                    Enviado a
+                </div>
+                <div>
+                    {{orden.direccion}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        {% for cp in orden.carrito.productos_related %}
+        {% with producto=cp.producto %}
+        <div class="row">
+            <div class="col-4">
+                {% if producto.imagen %}
+                <img src="{{producto.imagen.url}}" alt="" width="60" height="60">
+                {% endif %}
+            </div>
+            <div class="col-4">
+                <div>
+                    {{producto.titulo}}
+                </div>
+                <div class="text-danger">
+                    {{producto.precio | precio_format}}
+                </div>
+            </div>
+            <div class="col-4">
+                <div>
+                    Cantidad
+                </div>
+                <div>
+                    {{cp.cantidad}}
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+</div>

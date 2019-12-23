@@ -6,5 +6,9 @@ urlpatterns = [
     path('', views.orden, name='orden'),
     path('direccion', views.address, name='address'),
     path('seleccionar/direccion', views.select_direccion, name='select_direccion'),
-    path('establecer/direccionint/<int:pk>', views.check_direccion, name='check_direccion')
+    path('establecer/direccionint/<int:pk>', views.check_direccion, name='check_direccion'),
+    path('confirmacion', views.confirmacion, name='confirmacion'),
+    path('cancelar', views.cancel, name="cancel"),
+    path('completar', views.complete, name="complete"),
+    path('completados', views.OrdenListView.as_view(), name='completadas')
 ]

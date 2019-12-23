@@ -4,6 +4,7 @@ from django.db import models
 
 from usuarios.models import User
 from productos.models import Producto
+from ordenes.common import OrdenEstado
 
 from django.db.models.signals import pre_save, m2m_changed, post_save
 # Create your models here.
@@ -41,7 +42,7 @@ class Carrito(models.Model):
 
     @property
     def orden(self):
-        return self.orden_set.first()
+        return self.orden_set.filter(estado=OrdenEstado.CREADO).first()
 
 class CarritoProductosManager(models.Manager):
 

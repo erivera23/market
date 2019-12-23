@@ -6,16 +6,13 @@ from usuarios.models import User
 from carritos.models import Carrito
 from direcciones.models import Direccion
 
+from .common import OrdenEstado
+from .common import choices
+
 from django.db.models.signals import pre_save
 
 # Create your models here.
-class OrdenEstado(Enum):
-    CREADO = 'CREADA'
-    PAGADO = 'PAGADA'
-    COMPLETADA = 'COMPLETADA'
-    CANCELADA = 'CANCELADA'
 
-choices = [(tag, tag.value) for tag in OrdenEstado]
 
 class Orden(models.Model):
     orden_id = models.CharField(max_length=100, null=False, blank=False, unique=True)
@@ -43,6 +40,14 @@ class Orden(models.Model):
     
     def update_direccion_envio(self, direccion_envio):
         self.direccion = direccion_envio
+        self.save()
+
+    def cancel(self):
+        self.estado = OrdenEstado.CANCELADA
+        self.save()
+
+    def complete(self):
+        self.estado = OrdenEstado.COMPLETADA
         self.save()
 
     def get_total(self):

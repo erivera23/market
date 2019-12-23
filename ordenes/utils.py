@@ -20,3 +20,6 @@ def breadcrumb(productos=True, direccion=False, pago=False, confirmacion=False):
         {'title': 'Pago', 'active': pago, 'url': reverse('ordenes:orden')},
         {'title': 'Confirmación', 'active': confirmacion, 'url': reverse('ordenes:orden')}
     ]
+
+def destruir_orden(request):
+    request.session['orden_id'] = None

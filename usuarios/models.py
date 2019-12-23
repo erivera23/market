@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from ordenes.common import OrdenEstado
 # Create your models here.
 
 #AbstractUser o AbstractBaseUser --- 
@@ -14,6 +15,9 @@ class User(AbstractUser):
 
     def has_direccion_envio(self):
         return self.direccion_envio is not None
+
+    def ordenes_completadas(self):
+        return self.orden_set.filter(estado=OrdenEstado.COMPLETADA).order_by('-id')
 
 class Customer(User):
     class Meta:
