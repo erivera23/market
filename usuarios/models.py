@@ -19,6 +19,13 @@ class User(AbstractUser):
     def ordenes_completadas(self):
         return self.orden_set.filter(estado=OrdenEstado.COMPLETADA).order_by('-id')
 
+    def has_direcciones_envio(self):
+        return self.direccion_set.exists()
+
+    @property
+    def direcciones(self):
+        return self.direccion_set.all()
+
 class Customer(User):
     class Meta:
         proxy = True

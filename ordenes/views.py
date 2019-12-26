@@ -45,7 +45,7 @@ def orden(request, carrito, orden):
 def address(request, carrito, orden):
     direccion = orden.get_or_set_direccion_envio
 
-    can_choose_direccion = request.user.direccion_set.count() > 1
+    can_choose_direccion = request.user.has_direcciones_envio()
 
     return render(request, 'ordenes/direccion.html', {
         'carrito': carrito,
@@ -58,7 +58,7 @@ def address(request, carrito, orden):
 
 @login_required(login_url='login')
 def select_direccion(request):
-    direcciones = request.user.direccion_set.all()
+    direcciones = request.user.direcciones
 
     return render(request,'ordenes/select_direccion.html', {
         'breadcrumb': breadcrumb(direccion=True),

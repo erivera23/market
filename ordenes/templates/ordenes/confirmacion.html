@@ -41,9 +41,14 @@
                         <div class="font-weight-bold">
                             Código promocional
                         </div>
-                        <form action="">
-                            <input type="text" name="code" value="" class="form-control" placeholder="Código promoción">
+                        <form action="{% url 'codigos_promocionales:validate' %}" id="promocode-form">
+                            <input type="text" name="code" value="{{orden.codigo_promocion.codigo}}" class="form-control" placeholder="Código promoción" {% if orden.codigo_promocion %} readonly {% endif %}>
                         </form>
+                        <div class="text-success" id="promocode-success" style="font-size: 14px;">
+                            {% if orden.codigo_promocion %}
+                            Código aplicado exitosamente
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,4 +71,40 @@
             <a href="{% url 'ordenes:cancel' %}" class="btn btn-danger">Cancelar orden</a>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+   const form = document.getElementById('promocode-form')
+   form.addEventListener('submit', function(e){
+       e.preventDefault()
+       
+       const input = this.code
+       const code = input.value
+       const url = this.action + '?code='+code
+       const div_total = document.getElementById('orden-total')
+       const div_success = document.getElementById('promocode-success')
+
+       console.log(url)
+
+       fetch(url).then( response => response.json() )
+       .then(response => {
+           if(response.status === true){
+               //Success
+               div_total.innerHTML = 'L. ' + response.total
+
+               div_success.innerHTML = 'Código aplicado exitosamente'
+               div_success.classList.remove('text-danger')
+               div_success.classList.add('text-success')
+               input.readOnly = true
+               
+           }else{
+               div_success.innerHTML = 'Código no valido.'
+               div_success.classList.remove('text-success')
+               div_success.classList.add('text-danger')
+           }
+       })
+       
+   })
+</script>
 {% endblock %}
