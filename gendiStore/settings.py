@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'codigos_promocionales',
+    'billing_profiles',
     'ordenes',
     'direcciones',
     'carritos',
@@ -129,6 +130,9 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'riveraefrain5@gmail.com'
 EMAIL_HOST_PASSWORD = config('USER_EMAIL_PASSWORD') #Env
 EMAIL_USE_TLS = True
+
+STRIPE_PUBLIC_KEY = 'pk_test_24lbqM1H7GVGXkwVW4T7JLVq00CaFcTuVg'
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY') #ENVS
 
 
 # Static files (CSS, JavaScript, Images)

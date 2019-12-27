@@ -40,6 +40,9 @@ class Carrito(models.Model):
     def productos_related(self):
         return self.carritoproductos_set.select_related('producto')
 
+    def has_productos(self):
+        return self.productos.exists()
+
     @property
     def orden(self):
         return self.orden_set.filter(estado=OrdenEstado.CREADO).first()

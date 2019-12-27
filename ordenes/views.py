@@ -33,7 +33,8 @@ class OrdenListView(LoginRequiredMixin, ListView):
 @login_required(login_url='login')
 @validate_carrito_and_orden
 def orden(request, carrito, orden):
-
+    if not carrito.has_productos():
+        return redirect('carritos:carrito')
     return render(request, 'ordenes/orden.html', {
         'carrito': carrito,
         'orden': orden,
@@ -43,6 +44,9 @@ def orden(request, carrito, orden):
 @login_required(login_url='login')
 @validate_carrito_and_orden
 def address(request, carrito, orden):
+    if not carrito.has_productos():
+        return redirect('carritos:carrito')
+
     direccion = orden.get_or_set_direccion_envio
 
     can_choose_direccion = request.user.has_direcciones_envio()
@@ -80,7 +84,24 @@ def check_direccion(request, carrito, orden, pk):
 
 @login_required(login_url='login')
 @validate_carrito_and_orden
+def payment(request, carrito, orden):
+    if not carrito.has_productos() or orden.direccion is None:
+        return redirect('carritos:carrito')
+
+    billing_profile = orden.get_or_set_billing_profile()
+    return render(request, 'ordenes/payment.html', {
+        'carrito': carrito,
+        'orden': orden,
+        'billing_profile': billing_profile,
+        'breadcrumb': breadcrumb(direccion=True, pago=True)
+    })
+
+@login_required(login_url='login')
+@validate_carrito_and_orden
 def confirmacion(request, carrito, orden):
+
+    if not carrito.has_productos() or orden.direccion is None or orden.billing_profile is None:
+        return redirect('carritos:carrito')
 
     direccion = orden.direccion
     if direccion is None:

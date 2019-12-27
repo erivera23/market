@@ -3,6 +3,7 @@
 {% url 'carritos:carrito' as carrito %}
 {% url 'direcciones_envio:direcciones' as direcciones %}
 {% url 'ordenes:completadas' as completadas%}
+{% url 'billing_profiles:billing_profiles' as billing%}
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a href="{% url 'index' %}" class="navbar-brand">Store</a>
@@ -30,6 +31,12 @@
                 <li class="nav-item {% if request.path == direcciones %} active {% endif %}">
                     <a href="{{completadas}}" class="nav-link">
                         Mis pedidos <span class="fas fa-shipping-fast"></span>
+                    </a>
+                </li>
+
+                <li class="nav-item {% if request.path == billing %} active {% endif %}">
+                    <a href="{{billing}}" class="nav-link">
+                        Mis métodos de pago <span class="fab fa-cc-stripe"></span>
                     </a>
                 </li>
             {% endif %}

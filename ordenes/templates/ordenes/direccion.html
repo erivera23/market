@@ -17,7 +17,7 @@
             
             <a href="{% url 'ordenes:select_direccion' %}">Otra dirección</a>
             {% endif %}
-            <a href="{% url 'ordenes:confirmacion' %}" class="btn btn-warning">Entregar a esta dirección</a>
+            <a href="{% url 'ordenes:payment' %}" class="btn btn-warning">Entregar a esta dirección</a>
         </div>
     </div>
     {% else %}

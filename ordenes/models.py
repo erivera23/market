@@ -7,6 +7,7 @@ from usuarios.models import User
 from carritos.models import Carrito
 from direcciones.models import Direccion
 from codigos_promocionales.models import CodigoPromocional
+from billing_profiles.models import BillingProfiles
 
 from .common import OrdenEstado
 from .common import choices
@@ -28,6 +29,8 @@ class Orden(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     direccion = models.ForeignKey(Direccion, null=True, blank=True, on_delete=models.CASCADE)
     codigo_promocion = models.OneToOneField(CodigoPromocional, null=True, blank=True, on_delete=models.CASCADE)
+    billing_profile = models.ForeignKey(BillingProfiles, null=True, blank=True,
+                                        on_delete=models.CASCADE)
 
     def __str__(self):
         return self.orden_id
@@ -39,6 +42,20 @@ class Orden(models.Model):
 
             self.update_total()
             codigo_promocion.use()
+
+    def get_or_set_billing_profile(self):
+        if self.billing_profile:
+            return self.billing_profile
+        
+        billing_profile=self.user.billing_profile
+        if billing_profile:
+            self.update_billing_profile(billing_profile)
+
+        return billing_profile
+    
+    def update_billing_profile(self, billing_profile):
+        self.billing_profile = billing_profile
+        self.save()
 
     def get_or_set_direccion_envio(self):
         if self.direccion:
