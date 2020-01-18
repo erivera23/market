@@ -2,6 +2,7 @@ import threading
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.db import transaction
 from .models import Orden
 from carritos.utils import get_or_create_carrito
 from .utils import get_or_create_orden, breadcrumb, destruir_orden
@@ -11,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from carritos.utils import get_or_create_carrito
 from ordenes.utils import get_or_create_orden
 from direcciones.models import Direccion
+from cargos.models import Cargo
 from .mails import Mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -135,16 +137,19 @@ def complete(request, carrito, orden):
 
     if request.user.id != orden.user_id:
         return redirect('carritos:carrito')
-
-    orden.complete()
-
-    thread = threading.Thread(target=Mail.send_complete_orden, args=(
-        orden, request.user
-    ))
-    thread.start()
     
-    destruir_carrito(request)
-    destruir_orden(request)
+    cargo = Cargo.objects.create_cargo(orden)
+    if cargo:
+        with transaction.atomic():
+            orden.complete()
 
-    messages.success(request, 'Compra completada exitosamente')
+            thread = threading.Thread(target=Mail.send_complete_orden, args=(
+                orden, request.user
+            ))
+            thread.start()
+            
+            destruir_carrito(request)
+            destruir_orden(request)
+
+            messages.success(request, 'Compra completada exitosamente')
     return redirect('index')

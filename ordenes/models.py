@@ -16,7 +16,6 @@ from django.db.models.signals import pre_save
 
 # Create your models here.
 
-
 class Orden(models.Model):
     orden_id = models.CharField(max_length=100, null=False, blank=False, unique=True)
     user = models.ForeignKey(User, on_delete= models.CASCADE)
@@ -24,7 +23,7 @@ class Orden(models.Model):
     estado = models.CharField(max_length=50, choices=choices, 
                               default=OrdenEstado.CREADO) #Enum
 
-    shipping_total = models.DecimalField(default=50, max_digits=8, decimal_places=2)
+    shipping_total = models.DecimalField(default=5, max_digits=8, decimal_places=2)
     total = models.DecimalField(default=0, max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     direccion = models.ForeignKey(Direccion, null=True, blank=True, on_delete=models.CASCADE)
@@ -79,8 +78,18 @@ class Orden(models.Model):
         self.save()
 
     def get_total(self):
-        descuento = ((decimal.Decimal(self.get_descuento())) / 100) * self.carrito.total
+        TWOPLACES = decimal.Decimal(10) ** -2
+        if self.get_descuento() == 0:
+            return self.carrito.total + self.shipping_total
+        descuento = decimal.Decimal(decimal.Decimal(self.get_descuento() / 100) * self.carrito.total).quantize(TWOPLACES)
+        print("Descuento: ", descuento)
         return self.carrito.total + self.shipping_total - descuento
+
+    @property
+    def descripcion(self):
+        return 'Compra por ({}) productos '.format(
+            self.carrito.productos.count()
+        )
 
     def update_total(self):
         self.total = self.get_total()

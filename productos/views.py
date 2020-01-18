@@ -8,6 +8,7 @@ from .models import Producto
 class ProductoListView(ListView):
     template_name = 'index.html'
     queryset = Producto.objects.all().order_by('-id')
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
